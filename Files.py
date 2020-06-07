@@ -23,4 +23,9 @@ folders = []
 directory = os.scandir(input_dir)
 find_files(directory, raw_files)
 
-print(raw_files)
+
+print("unsorted:", raw_files)
+
+raw_files.sort()
+
+print("sorted:", raw_files)
