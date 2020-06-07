@@ -70,8 +70,7 @@ find_files(directory, all_dict)
 
 
 print("unsorted:", all_dict)
-all_dict = sorted(all_dict)
-print("sorted:", all_dict)
+print("sorted:", sorted(all_dict))
 
 # From here we've read in all our data, and are ready to manipulate it:
 
@@ -79,6 +78,7 @@ valid_files = []
 valid_content = []
 invalid_files = []
 invalid_content = []
+
 '''
 for i in range(len(all_dict)):
 	# If our current file has a valid name, add it to our valid files array
@@ -91,12 +91,10 @@ for i in range(len(all_dict)):
 		# corresponding invalid arrays
 		invalid_files.append(raw_files[i])
 		invalid_content.append(contents[i])
-
-
-print(contents)
-
-
-for s in raw_files:
-	print(s, "validity:", validate_filename(s))
 '''
+
+for s in sorted(all_dict.keys()):
+	print(s, "validity:", validate_filename(s))
+
+
 print(dict)
