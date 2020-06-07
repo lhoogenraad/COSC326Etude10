@@ -5,24 +5,22 @@ import os
 def find_files(dir, raw_files):
 	for file in dir:
 		if(os.path.isfile(file)):
-			raw_files.append(file.name);
+			raw_files.append(file.name)
 		else:
 			# must be a folder
-			new_dir = os.scandir(file);
+			new_dir = os.scandir(file)
 			# open the folder and extract all files
-			find_files(new_dir, raw_files);
+			find_files(new_dir, raw_files)
 			#print(new_dir);
 	return
 
 # gonna try to get the directory inputted into something
-input_dir = input("Enter Directory: ");
-print(input_dir);
+input_dir = input("Enter Directory: ")
+print(input_dir)
 raw_files = []
 folders = []
 
-directory = os.scandir(input_dir);
-find_files(directory, raw_files);
+directory = os.scandir(input_dir)
+find_files(directory, raw_files)
 
-print(raw_files);
-
-
+print(raw_files)
