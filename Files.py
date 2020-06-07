@@ -30,6 +30,20 @@ def validate_filename(filename):
 		if not s.isnumeric():
 			return False
 
+	job_site = int(namesplit[0])
+	lab_desk = int(namesplit[1])
+	job_num = int(namesplit[2])
+
+	# This code checks that the job numbers are in the valid range
+	# Does not check that job_num increases in sequential order
+	#todo: Account for leading 0 in numbers < 10 e.g. job_num should be 04, not 4
+	#todo: probably need to do some bs string manipulation
+	if job_site < 1 and job_site > 5:
+		return False
+	if lab_desk < 1 and lab_desk > 25:
+		return False
+	if job_num < 1 and job_num > 99
+
 	if extension != ".txt":
 		return False
 
