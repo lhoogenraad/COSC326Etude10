@@ -6,8 +6,8 @@ def find_files(dir, raw_files, content_array):
 	for file in dir:
 		if(os.path.isfile(file)):
 			raw_files.append(file.name)
-			with open(os.path + file, 'r') as f:
-				content_array.append(f.read())
+			#with open(os.path + file, 'r') as f:
+			#	content_array.append(f.read())
 		else:
 			# must be a folder
 			new_dir = os.scandir(file)
@@ -40,12 +40,23 @@ def validate_filename(filename):
 	#todo: probably need to do some bs string manipulation
 	if job_site < 1 and job_site > 5:
 		return False
-	if lab_desk < 1 and lab_desk > 25:
+	elif lab_desk < 1 and lab_desk > 25:
 		return False
-	if job_num < 1 and job_num > 99
+	elif job_num < 1 and job_num > 99:
+		return False
+
+	# This code accounts for when the number is between 1 and 9 inclusive, it checks that
+	# the actual string has a leading 0
+	if namesplit[0][0] != '0':
+		return False
+	elif lab_desk < 10 and namesplit[1][0] != '0':
+		return False
+	elif job_num < 10 and namesplit[2][0] != '0':
+		return False
 
 	if extension != ".txt":
 		return False
+	return True
 
 
 # gonna try to get the directory inputted into something
@@ -64,3 +75,5 @@ raw_files.sort()
 print("sorted:", raw_files)
 
 #print(contents)
+for s in raw_files:
+	print(s, "validity:", validate_filename(s))
