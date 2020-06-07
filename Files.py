@@ -107,12 +107,13 @@ for i in range(len(file_names)):
 for s in sorted(all_dict.keys()):
 	#print(s, "validity:", validate_filename(s))
 	pass
-# testing file stuff
+# basic idea behind reading files
 #read_f = open('BaseCase/03-05-01.txt', 'r')
 #print(read_f.read())
 #read_f.close()
-
-# basic file stuff, need a way to append folders
+write_f = open('result.txt', 'w')
+write_f.close()
+write_f = open('result.txt', 'a')
 for file in valid_files:
 	file_string = input_dir + '/' + file
 	try:
@@ -132,6 +133,9 @@ for file in valid_files:
 				j+=1
 			i+=1
 	
-		
+	
+	write_f.write(read_f.read())
 	print(read_f.read())
+	write_f.write('\n')
 	read_f.close()
+write_f.close()
