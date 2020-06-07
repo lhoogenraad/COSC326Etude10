@@ -4,8 +4,8 @@ import os
 # just finding files, will parse and sort later
 def find_files(dir, dict, filenames):
 	for file in dir:
-		file_names.append(file)
 		if(os.path.isfile(file)):
+			file_names.append(file.name)
 			with open(file, 'r') as f:
 				dict[file.name] = f.read()
 		else:
@@ -66,38 +66,35 @@ folders = []
 file_names = []
 all_dict = {}
 
-
+print(file_names)
 directory = os.scandir(input_dir)
 find_files(directory, all_dict, file_names)
 
-
-print("unsorted:", all_dict)
-print("sorted:", sorted(all_dict))
+# Sort our array of filenames that we hopefully read in
 file_names.sort()
 
 # From here we've read in all our data, and are ready to manipulate it:
 
+# These arrays contain valid files and their corresponding input
 valid_files = []
 valid_content = []
+# The same but for invalid files and their corresponding input
 invalid_files = []
 invalid_content = []
 
 
-for i in range(len(all_dict)):
+for i in range(len(file_names)):
 	# If our current file has a valid name, add it to our valid files array
 	# and add the corresponding content to the valid files array
-	if validate_filename(all):
-		valid_files.append()
-		valid_content.append(contents[i])
+	if validate_filename(file_names[i]):
+		valid_files.append(file_names[i])
+		valid_content.append(all_dict[file_names[i]])
 	else:
 		# If we end up here, our filename is not valid, so add the filename and its contents to
 		# corresponding invalid arrays
-		invalid_files.append(raw_files[i])
-		invalid_content.append(contents[i])
+		invalid_files.append(file_names[i])
+		invalid_content.append(all_dict[file_names[i]])
 
 
 for s in sorted(all_dict.keys()):
 	print(s, "validity:", validate_filename(s))
-
-
-print(dict)
