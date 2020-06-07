@@ -2,8 +2,9 @@ from pathlib import Path
 import os
 # semi-recursive function to find all files in a directory
 # just finding files, will parse and sort later
-def find_files(dir, dict):
+def find_files(dir, dict, filenames):
 	for file in dir:
+		file_names.append(file)
 		if(os.path.isfile(file)):
 			with open(file, 'r') as f:
 				dict[file.name] = f.read()
@@ -11,7 +12,7 @@ def find_files(dir, dict):
 			# must be a folder
 			new_dir = os.scandir(file)
 			# open the folder and extract all files
-			find_files(new_dir, all_dict)
+			find_files(new_dir, all_dict, filenames)
 	return
 
 
@@ -62,15 +63,17 @@ def validate_filename(filename):
 input_dir = input("Enter Directory: ")
 print(input_dir)
 folders = []
+file_names = []
 all_dict = {}
 
 
 directory = os.scandir(input_dir)
-find_files(directory, all_dict)
+find_files(directory, all_dict, file_names)
 
 
 print("unsorted:", all_dict)
 print("sorted:", sorted(all_dict))
+file_names.sort()
 
 # From here we've read in all our data, and are ready to manipulate it:
 
@@ -79,19 +82,19 @@ valid_content = []
 invalid_files = []
 invalid_content = []
 
-'''
+
 for i in range(len(all_dict)):
 	# If our current file has a valid name, add it to our valid files array
 	# and add the corresponding content to the valid files array
-	if validate_filename(raw_files[i]):
-		valid_files.append(raw_files[i])
+	if validate_filename(all):
+		valid_files.append()
 		valid_content.append(contents[i])
 	else:
 		# If we end up here, our filename is not valid, so add the filename and its contents to
 		# corresponding invalid arrays
 		invalid_files.append(raw_files[i])
 		invalid_content.append(contents[i])
-'''
+
 
 for s in sorted(all_dict.keys()):
 	print(s, "validity:", validate_filename(s))
