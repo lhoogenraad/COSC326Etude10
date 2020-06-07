@@ -38,11 +38,11 @@ def validate_filename(filename):
 	# Does not check that job_num increases in sequential order
 	#todo: Account for leading 0 in numbers < 10 e.g. job_num should be 04, not 4
 	#todo: probably need to do some bs string manipulation
-	if job_site < 1 and job_site > 5:
+	if job_site < 1 or job_site > 5:
 		return False
-	elif lab_desk < 1 and lab_desk > 25:
+	elif lab_desk < 1 or lab_desk > 25:
 		return False
-	elif job_num < 1 and job_num > 99:
+	elif job_num < 1 or job_num > 99:
 		return False
 
 	# This code accounts for when the number is between 1 and 9 inclusive, it checks that
