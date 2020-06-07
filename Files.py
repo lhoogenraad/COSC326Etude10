@@ -6,8 +6,8 @@ def find_files(dir, raw_files, content_array):
 	for file in dir:
 		if(os.path.isfile(file)):
 			raw_files.append(file.name)
-			#with open(os.path + file, 'r') as f:
-			#	content_array.append(f.read())
+			with open(file, 'r') as f:
+				content_array.append(f.read())
 		else:
 			# must be a folder
 			new_dir = os.scandir(file)
@@ -66,6 +66,7 @@ raw_files = []
 folders = []
 contents = []
 
+
 directory = os.scandir(input_dir)
 find_files(directory, raw_files, contents)
 
@@ -74,6 +75,28 @@ print("unsorted:", raw_files)
 raw_files.sort()
 print("sorted:", raw_files)
 
-#print(contents)
+# From here we've read in all our data, and are ready to manipulate it:
+
+valid_files = []
+valid_content = []
+invalid_files = []
+invalid_content = []
+
+for i in range(len(raw_files)):
+	# If our current file has a valid name, add it to our valid files array
+	# and add the corresponding content to the valid files array
+	if validate_filename(raw_files[i]):
+		valid_files.append(raw_files[i])
+		valid_content.append(contents[i])
+	else:
+		# If we end up here, our filename is not valid, so add the filename and its contents to
+		# corresponding invalid arrays
+		invalid_files.append(raw_files[i])
+		invalid_content.append(contents[i])
+
+
+print(contents)
+
+
 for s in raw_files:
 	print(s, "validity:", validate_filename(s))
