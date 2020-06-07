@@ -2,18 +2,27 @@ from pathlib import Path
 import os
 # semi-recursive function to find all files in a directory
 # just finding files, will parse and sort later
-def find_files(dir, dict, filenames):
+def find_files(dir, dict, filenames, folders, old_folder, i):
+	files_on_level = []
 	for file in dir:
 		if(os.path.isfile(file)):
 			file_names.append(file.name)
+			files_on_level.append(file.name)
 			with open(file, 'r') as f:
 				dict[file.name] = f.read()
 		else:
 			# must be a folder
 			new_dir = os.scandir(file)
+			new_folder = old_folder + '/' + file.name
 			# open the folder and extract all files
-			find_files(new_dir, all_dict, filenames)
-	return
+			#folders.append(files_on_level)
+			i = find_files(new_dir, all_dict, filenames, folders, new_folder, i)
+	print(i)
+	print(old_folder)
+	folders.append(files_on_level)
+	folders[i].append(old_folder)
+	i+=1
+	return i
 
 
 # This function will return true if file is valid, false if invalid
@@ -61,15 +70,14 @@ def validate_filename(filename):
 
 # gonna try to get the directory inputted into something
 input_dir = input("Enter Directory: ")
-print(input_dir)
 folders = []
 file_names = []
 all_dict = {}
+folders = []
 
-print(file_names)
 directory = os.scandir(input_dir)
-find_files(directory, all_dict, file_names)
-
+find_files(directory, all_dict, file_names, folders, input_dir, 0)
+print(folders)
 # Sort our array of filenames that we hopefully read in
 file_names.sort()
 
@@ -97,4 +105,33 @@ for i in range(len(file_names)):
 
 
 for s in sorted(all_dict.keys()):
-	print(s, "validity:", validate_filename(s))
+	#print(s, "validity:", validate_filename(s))
+	pass
+# testing file stuff
+#read_f = open('BaseCase/03-05-01.txt', 'r')
+#print(read_f.read())
+#read_f.close()
+
+# basic file stuff, need a way to append folders
+for file in valid_files:
+	file_string = input_dir + '/' + file
+	try:
+		read_f = open(file_string, 'r')
+	except:
+		# if it fails, means the file isn't in the folder, 
+		# so look through the other folders
+		i = 0
+		# folders[len-1] = base level
+		while i < len(folders)-1:
+			j = 0
+			# last item is the folder
+			while j < len(folders[i])-1:
+				if(file == folders[i][j]):
+					file_string = folders[i][len(folders[i])-1] + '/' + file
+					read_f = open(file_string, 'r')
+				j+=1
+			i+=1
+	
+		
+	print(read_f.read())
+	read_f.close()
