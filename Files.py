@@ -120,7 +120,6 @@ while i < len(file_names):
 	i+=1
 numbers.sort()
 file_names.sort()
-print(file_names)
 # From here we've read in all our data, and are ready to manipulate it:
 
 # # These arrays contain valid files and their corresponding input
@@ -164,12 +163,9 @@ while i < len(numbers):
 		print(file[1], numbers[i])
 		if(file[1] == numbers[i]):
 			file_string = input_dir + '/' + file[0]
-			print(file_string)
 			try:
 				read_f = open(file_string, 'r')
-				print("read_opened\n")
 			except:
-				print("read_failed")
 				j = 0
 				while j < len(folders)-1:
 					k = 0
@@ -177,14 +173,17 @@ while i < len(numbers):
 						if(file[0] == folders[j][k]):
 							file_string = folders[j][len(folders[j])-1] + '/' + file[0]
 							read_f = open(file_string, 'r')
-							print("read_opened\n")
 							# adding breaks to make process more efficient
 							break
 						k+=1
+					# break out of folders file loop if found file
+					if not read_f.closed:
+						break
 					j+=1
 			write_f.write(read_f.read())
 			write_f.write('\n')
 			read_f.close()
+			# breaks out of file list if found
 			break
 	i+=1
 write_f.close()
