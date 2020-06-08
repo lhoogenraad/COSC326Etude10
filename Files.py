@@ -42,7 +42,25 @@ def validate_filename(filename):
 	job_site = int(namesplit[0])
 	lab_desk = int(namesplit[1])
 	job_num = int(namesplit[2])
-
+	
+	# create an id using job_site and lab_desk, with a number to count how many there are
+	file_id = [namesplit[0]+namesplit[1], 1]
+	# how we check the thing doesn't exist
+	count = 0
+	for id in unique_ids:
+		# if the id is already in unique_ids
+		if(file_id[0] == id[0]):
+			# increment the number of times the id shows up
+			id[1] += 1
+		else:
+			# otherwise increment the count
+			count+= 1
+	# if we haven't seen the id
+	if(count == len(unique_ids)):
+		# add it
+		unique_ids.append(file_id)
+	
+	
 	# This code checks that the job numbers are in the valid range
 	# Does not check that job_num increases in sequential order
 	#todo: Account for leading 0 in numbers < 10 e.g. job_num should be 04, not 4
@@ -86,11 +104,13 @@ file_names.sort()
 # These arrays contain valid files and their corresponding input
 valid_files = []
 valid_content = []
+
 # The same but for invalid files and their corresponding input
 invalid_files = []
 invalid_content = []
 
-
+# list of unique jobsites+labdesks
+unique_ids = []
 for i in range(len(file_names)):
 	# If our current file has a valid name, add it to our valid files array
 	# and add the corresponding content to the valid files array
@@ -103,9 +123,10 @@ for i in range(len(file_names)):
 		invalid_files.append(file_names[i])
 		invalid_content.append(all_dict[file_names[i]])
 
+print(unique_ids)
 
 for s in sorted(all_dict.keys()):
-	#print(s, "validity:", validate_filename(s))
+	print(s, "validity:", validate_filename(s))
 	pass
 # basic idea behind reading files
 #read_f = open('BaseCase/03-05-01.txt', 'r')
@@ -135,7 +156,6 @@ for file in valid_files:
 	
 	
 	write_f.write(read_f.read())
-	print(read_f.read())
 	write_f.write('\n')
 	read_f.close()
 write_f.close()
