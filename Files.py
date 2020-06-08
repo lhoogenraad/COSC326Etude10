@@ -17,8 +17,6 @@ def find_files(dir, dict, filenames, folders, old_folder, i):
 			# open the folder and extract all files
 			#folders.append(files_on_level)
 			i = find_files(new_dir, all_dict, filenames, folders, new_folder, i)
-	print(i)
-	print(old_folder)
 	folders.append(files_on_level)
 	folders[i].append(old_folder)
 	i+=1
@@ -52,6 +50,12 @@ def validate_filename(filename):
 		if(file_id[0] == id[0]):
 			# increment the number of times the id shows up
 			id[1] += 1
+			
+			if(job_num != id[1]):
+				print(id[1], job_num, "broken", id[0])
+				return False
+			else:
+				print(id[1], job_num)
 		else:
 			# otherwise increment the count
 			count+= 1
@@ -59,6 +63,9 @@ def validate_filename(filename):
 	if(count == len(unique_ids)):
 		# add it
 		unique_ids.append(file_id)
+		if(job_num != 1):
+			print(id[1], job_num)
+			return False
 	
 	
 	# This code checks that the job numbers are in the valid range
@@ -95,7 +102,7 @@ folders = []
 
 directory = os.scandir(input_dir)
 find_files(directory, all_dict, file_names, folders, input_dir, 0)
-print(folders)
+#print(folders)
 # Sort our array of filenames that we hopefully read in
 file_names.sort()
 
@@ -108,7 +115,7 @@ valid_content = []
 # The same but for invalid files and their corresponding input
 invalid_files = []
 invalid_content = []
-
+validity = []
 # list of unique jobsites+labdesks
 unique_ids = []
 for i in range(len(file_names)):
@@ -125,9 +132,9 @@ for i in range(len(file_names)):
 
 print(unique_ids)
 
-for s in sorted(all_dict.keys()):
-	print(s, "validity:", validate_filename(s))
-	pass
+#for s in sorted(all_dict.keys()):
+	#print(s, "validity:", validate_filename(s))
+	#pass
 # basic idea behind reading files
 #read_f = open('BaseCase/03-05-01.txt', 'r')
 #print(read_f.read())
