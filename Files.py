@@ -52,7 +52,7 @@ while i < len(file_names):
 	i+=1
 numbers.sort()
 file_names.sort()
-
+print(numbers)
 write_f = open('result.txt', 'w')
 write_f.close()
 write_f = open('result.txt', 'a')
